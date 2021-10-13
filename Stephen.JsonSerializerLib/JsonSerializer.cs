@@ -11,10 +11,7 @@ namespace Stephen.JsonSerializer
     {
         public List<Type> IgnoreTypes { get; }
 
-        public JsonSerializer(params Type[] ignoreTypes)
-        {
-            IgnoreTypes = new List<Type>(ignoreTypes);
-        }
+        public JsonSerializer(params Type[] ignoreTypes) { IgnoreTypes = new List<Type>(ignoreTypes); }
 
         public string Serialize(object source)
         {
@@ -82,10 +79,10 @@ namespace Stephen.JsonSerializer
             source.GetType()
                   .GetProperties()
                   .Select(prop => new
-                  {
-                      Name = prop.Name,
-                      Value = source.GetFieldOrPropertyValue(prop.Name)
-                  })
+                                  {
+                                      Name = prop.Name,
+                                      Value = source.GetFieldOrPropertyValue(prop.Name)
+                                  })
                   .Where(p => !IgnoreTypes.Any(t => t.IsInstanceOfType(p.Value)))
                   .Delimit((item, wr) =>
                            {
